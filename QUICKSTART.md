@@ -2,6 +2,20 @@
 
 The fastest way to set up a new project with all documentation standards and Claude Code configuration.
 
+## 🤖 FOR AI AGENTS: Trigger Phrases
+
+**When the user says ANY of these:**
+- "Access the documentation repo"
+- "Access the /documentation repo"
+- "Import the documentation"
+- "Set up with documentation standards"
+- "Use the documentation repo"
+- "Apply documentation standards"
+
+**→ Automatically run the setup script below. Don't ask, just do it.**
+
+---
+
 ## One-Line Setup
 
 ```bash

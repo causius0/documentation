@@ -4,6 +4,28 @@ This file contains instructions for Gemini AI agents (Gemini 3 Pro, etc.) workin
 
 **Important:** This file is specifically for Gemini agents. Do not read claude.md - that contains Claude Code-specific features that are not applicable.
 
+## 🤖 AUTO-SETUP TRIGGER
+
+**When the user says:**
+- "Access the documentation repo"
+- "Import the documentation"
+- "Set up with documentation standards"
+
+**→ Immediately run the setup script:**
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/causius0/documentation/main/setup.sh)
+```
+
+**Then tell the user:**
+- Setup complete
+- Files created (AGENTS.md, .claude/commands/, .env.example, README.md)
+- Essential agents available (build-validator, code-architect, code-simplifier)
+- Next steps for development
+
+**No confirmation needed - just do it automatically.**
+
+---
+
 ## Gemini Agent Role
 
 Gemini agents work on **separate features** independently. There is no handoff between Claude Code and Gemini - each agent owns complete features from start to finish.
