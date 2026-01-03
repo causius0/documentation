@@ -14,6 +14,7 @@ This repository contains standardized documentation templates and guidelines tha
 ```
 documentation/
 ├── README.md                      # This file - overview and quick start
+├── QUICKSTART.md                  # ⚡ Automated setup (ONE-LINE INSTALL)
 ├── agents.md                      # AI agent instructions and MCP servers
 ├── claude.md                      # Claude Code plugins, skills, workflows
 ├── coding-standards.md            # Code style, comments, philosophy
@@ -22,8 +23,28 @@ documentation/
 ├── security-testing.md            # Hacker agent and OWASP Top 10
 ├── documentation-standards.md     # README format, JSDoc, ASCII art
 ├── dependencies-guide.md          # When/how to add dependencies
-└── HOW_TO_EXPORT.md              # Guide for copying to new projects
+├── HOW_TO_EXPORT.md              # Manual integration guide
+└── setup.sh                       # Automated setup script
 ```
+
+## Quick Start ⚡
+
+**The fastest way to use this in your project:**
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/causius0/documentation/main/setup.sh)
+```
+
+This one command:
+1. Creates `.claude/` with config and slash commands
+2. Generates `AGENTS.md` for your project
+3. Sets up `/security-audit`, `/pre-merge`, `/document-feature` commands
+4. Configures recommended Claude Code plugins
+5. Creates `.env.example` and `README.md` templates
+
+**Then:** Install recommended plugins in Claude Code (Superpowers, Episodic Memory, Feature Dev, Frontend Design)
+
+**See [QUICKSTART.md](QUICKSTART.md) for detailed instructions.**
 
 ## Core Documentation Files
 
@@ -222,6 +243,7 @@ This is a **living repository**. Update it whenever you:
 
 | Task | File to Check |
 |------|---------------|
+| **New project setup** | **QUICKSTART.md** ⚡ |
 | Starting work | agents.md |
 | Using Claude Code | claude.md |
 | Writing code | coding-standards.md |
@@ -230,7 +252,7 @@ This is a **living repository**. Update it whenever you:
 | Adding package | dependencies-guide.md |
 | Security testing | security-testing.md |
 | Writing docs | documentation-standards.md |
-| Exporting to project | HOW_TO_EXPORT.md |
+| Manual integration | HOW_TO_EXPORT.md |
 
 ## Philosophy
 

@@ -2,6 +2,29 @@
 
 This guide explains how to integrate this documentation repository into your projects.
 
+## Quick Start (Automated) ⚡
+
+**The fastest way to set up a new project:**
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/causius0/documentation/main/setup.sh)
+```
+
+This automatically:
+- ✅ Creates `.claude/` directory with config and commands
+- ✅ Generates project-specific `AGENTS.md`
+- ✅ Sets up slash commands (`/security-audit`, `/pre-merge`, etc.)
+- ✅ Configures Claude Code plugins
+- ✅ Creates `.env.example` and `README.md`
+
+**See [QUICKSTART.md](QUICKSTART.md) for full automated setup documentation.**
+
+---
+
+## Manual Integration Methods
+
+If you prefer manual control, choose one of these three methods:
+
 ## Three Integration Methods
 
 ```
