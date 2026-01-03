@@ -4,14 +4,13 @@ This file contains Claude Code-specific features, plugins, and skills that enhan
 
 ## Why Claude Code?
 
-Claude Code is the **primary AI agent** for this workflow because:
+Claude Code is optimized for this workflow because:
 - Native integration with development tools
 - Built-in skills for common workflows
 - Plugin ecosystem for extensibility
 - Better context retention across sessions
 - Optimized for coding tasks
-
-**Gemini 3 Pro** is used as a fallback when Claude Code is unavailable.
+- Access to powerful automation plugins
 
 ## Built-in Features
 
@@ -490,81 +489,190 @@ Add comprehensive documentation for a feature.
 - [ ] ASCII diagrams added where helpful
 ```
 
-## Integration with Gemini 3 Pro
+## Permission Management
 
-When using Gemini 3 Pro as fallback:
+### /permissions Command
 
-### What Gemini 3 Pro CAN do:
-✅ Follow coding-standards.md (extensive comments)
-✅ Use tech-stack.md (technology choices)
-✅ Follow git-workflow.md (branching strategy)
-✅ Perform security testing (OWASP checklist)
-✅ Write comprehensive documentation
-✅ Add dependencies following dependencies-guide.md
+Automatically authorize safe operations to reduce interruptions during development.
 
-### What Gemini 3 Pro CANNOT do:
-❌ Use Claude Code plugins (Superpowers, etc.)
-❌ Execute custom slash commands
-❌ Access Claude Code skills
-❌ Use MCP servers (Claude Code specific)
+**Purpose:** Pre-authorize common, safe operations so you don't need to manually approve each one.
 
-### Handoff Protocol
-
-**Claude Code → Gemini 3 Pro:**
+**What it authorizes:**
 ```typescript
-/**
- * AGENT HANDOFF: Claude Code → Gemini 3 Pro
- *
- * Date: [date]
- * Branch: [branch name]
- *
- * Completed by Claude Code:
- * - [List completed work]
- * - Used plugins: [list plugins used]
- *
- * Next steps for Gemini 3 Pro:
- * - [ ] [Task 1] - Follow coding-standards.md
- * - [ ] [Task 2] - Follow git-workflow.md
- * - [ ] [Task 3] - Run security audit (security-testing.md)
- *
- * Important context:
- * - Cannot use Claude Code plugins
- * - Must follow all documentation standards
- * - Comment extensively (see coding-standards.md)
- * - Run hacker agent manually (OWASP Top 10 checklist)
- *
- * References:
- * - Coding standards: [link to coding-standards.md]
- * - Security testing: [link to security-testing.md]
- * - Git workflow: [link to git-workflow.md]
- */
+// File operations (safe)
+✅ Read any file in project
+✅ Write to project files (not system files)
+✅ Create new files in project directory
+✅ Edit existing project files
+
+// Git operations (safe)
+✅ git status
+✅ git diff
+✅ git log
+✅ git branch (list/create, no delete)
+✅ git add
+✅ git commit (no --amend unless explicitly requested)
+✅ git push to feature branches (not main/master)
+
+// Build/Test operations (safe)
+✅ npm/pnpm install
+✅ npm/pnpm run dev
+✅ npm/pnpm run build
+✅ npm/pnpm run lint
+✅ npm/pnpm run typecheck
+✅ npm/pnpm test
+
+// Safe terminal commands
+✅ ls, cat, grep, find
+✅ mkdir, touch (in project directory)
+✅ node, python (running project scripts)
+
+// What is NEVER auto-authorized
+❌ git push --force
+❌ git push to main/master without PR
+❌ git reset --hard
+❌ git rebase (interactive)
+❌ rm -rf or similar destructive commands
+❌ System-level operations
+❌ npm publish
+❌ Deployment commands (must be explicit)
+❌ Database operations on production
+❌ Modifying files outside project directory
 ```
 
-**Gemini 3 Pro → Claude Code:**
-```typescript
-/**
- * AGENT HANDOFF: Gemini 3 Pro → Claude Code
- *
- * Date: [date]
- * Branch: [branch name]
- *
- * Completed by Gemini 3 Pro:
- * - [List completed work]
- * - Followed: coding-standards.md, git-workflow.md
- * - Security audit: [PASS/FAIL with details]
- *
- * Next steps for Claude Code:
- * - [ ] [Task 1] - Can use Superpowers skills
- * - [ ] [Task 2] - Can leverage MCP servers
- * - [ ] [Task 3] - Use custom slash commands
- *
- * Recommendations:
- * - Consider using /verification-before-completion
- * - Use /finishing-a-development-branch for merge
- * - Leverage episodic-memory for context
- *
- * All code is fully commented as per coding-standards.md
- */
+**How to use:**
+
+Create `.claude/commands/permissions.md`:
+```markdown
+# Permissions Configuration
+
+Grant Claude Code permission to perform safe operations without asking.
+
+## Auto-Approved Operations
+
+The following operations are pre-authorized and will not require manual approval:
+
+### File Operations
+- Read any file in the project
+- Write/edit files in src/, components/, pages/, api/, lib/, utils/
+- Create new files in project directories
+- Delete files ONLY when explicitly requested
+
+### Git Operations
+- git status, diff, log, branch
+- git add (all files)
+- git commit with proper messages
+- git push to feature/* branches
+
+### Build & Test
+- Package installation (npm/pnpm install)
+- Development server (npm run dev)
+- Build (npm run build)
+- Linting (npm run lint)
+- Type checking (npm run typecheck)
+- Testing (npm test)
+
+### Safe Commands
+- File viewing (cat, less, head, tail)
+- File finding (ls, find, grep)
+- Directory operations (cd, pwd, mkdir)
+
+## Requires Explicit Permission
+
+These operations ALWAYS require manual approval:
+
+- git push to main/master
+- git push --force (any branch)
+- Destructive git operations (reset --hard, rebase -i)
+- npm publish or deployment
+- Database operations
+- Deleting directories
+- Operations outside project directory
+- System configuration changes
+
+## Usage
+
+After creating this file, invoke:
+```
+/permissions
+```
+
+Claude Code will acknowledge and follow these permission rules for the session.
+```
+
+**Best practice:** Run `/permissions` at the start of each session for smoother workflow.
+
+## Essential Project Agents
+
+Every project should include these specialized agents for optimal development:
+
+### 1. **build-validator**
+**Purpose:** Validates builds and catches errors before deployment
+
+**What it does:**
+- Runs complete build process
+- Checks for TypeScript errors
+- Validates all imports and dependencies
+- Ensures no missing files
+- Verifies environment variables are documented
+- Tests production build
+
+**When to use:**
+- Before every commit
+- As part of /pre-merge workflow
+- Before deployment
+- After dependency updates
+
+**Usage:**
+```bash
+# Invoke the build-validator agent
+# It will run: lint, typecheck, build, and verify all steps pass
+```
+
+### 2. **code-architect**
+**Purpose:** Designs feature architecture before implementation
+
+**What it does:**
+- Analyzes existing codebase patterns
+- Designs consistent architecture
+- Plans file structure
+- Identifies dependencies
+- Creates implementation blueprint
+- Ensures pattern consistency
+
+**When to use:**
+- Before implementing complex features
+- When refactoring large sections
+- Starting new modules
+- Integrating third-party services
+
+**Usage:**
+```bash
+# Invoke code-architect agent with feature description
+# Receive: Architecture plan, files to create/modify, data flow diagrams
+```
+
+### 3. **code-simplifier**
+**Purpose:** Refactors code to be simpler and more maintainable
+
+**What it does:**
+- Identifies over-engineered code
+- Suggests simplifications
+- Removes unnecessary abstractions
+- Consolidates duplicate logic
+- Improves readability
+- Maintains functionality while reducing complexity
+
+**When to use:**
+- After feature completion
+- When code review finds complexity issues
+- Regular refactoring sessions
+- Before adding new features to complex modules
+
+**Usage:**
+```bash
+# Invoke code-simplifier agent on a file or module
+# Receive: Simplified version with explanation of changes
 ```
 
 ## Best Practices
@@ -684,12 +792,13 @@ brainstorming
 ### MCP Server Issues
 
 ```bash
-# MCP servers are Claude Code specific
-# If using Gemini 3 Pro, use standard tools instead
+# MCP servers are Claude Code specific features
+# Verify MCP server is configured in .claude/config.json
 
-# Filesystem operations → Use standard file tools
-# GitHub operations → Use gh CLI via terminal
-# Database queries → Use database client or ORM
+# Check MCP server status
+# Settings > MCP Servers > Verify enabled
+
+# Restart Claude Code if MCP server not responding
 ```
 
 ## Resources
@@ -711,17 +820,9 @@ brainstorming
 - [ ] Always use /brainstorming before new features
 - [ ] Always use /verification-before-completion before merge
 - [ ] Create custom skills for repetitive tasks
-- [ ] Document plugin usage in handoffs to Gemini 3 Pro
+- [ ] Use build-validator agent before commits
+- [ ] Use code-architect agent for complex features
+- [ ] Use code-simplifier agent during refactoring
 - [ ] Follow all documentation standards (coding-standards.md, etc.)
 - [ ] Run security audits (security-testing.md + Superpowers verification)
-
-### Gemini 3 Pro Agent Checklist
-
-- [ ] Read all documentation files (cannot use plugins)
-- [ ] Follow coding-standards.md rigorously
-- [ ] Follow git-workflow.md (branch, test, merge)
-- [ ] Run security audit manually (OWASP Top 10 checklist)
-- [ ] Document extensively (cannot rely on Claude Code context)
-- [ ] Leave detailed handoff notes for Claude Code
-- [ ] Reference documentation repo for all standards
-- [ ] Test thoroughly before merging
+- [ ] Use /permissions to authorize safe operations

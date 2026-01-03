@@ -12,6 +12,10 @@ Provide AI agents with:
 
 **For Claude Code users:** See [claude.md](claude.md) for Claude Code-specific plugins, skills, and enhanced workflows.
 
+**For Gemini users:** See [gemini.md](gemini.md) for Gemini-specific instructions and workflows.
+
+**Important:** Claude Code and Gemini work on **separate features** independently. Each agent owns complete features from start to finish - no handoffs between agents.
+
 ## Sample AGENTS.md Template
 
 Below is an example for a pnpm monorepo with Turbo:
@@ -171,46 +175,48 @@ This project has the following MCP servers configured:
 
 ## Multi-Agent Coordination
 
-### Claude Code & Gemini 3 Pro Alignment
+### Separate Feature Ownership
 
-Both agents must:
-1. **Use the same terminology** - Consistent naming across agents
+**Important principle:** Claude Code and Gemini work on **separate features independently**. There are NO handoffs between agents.
+
+**How it works:**
+- Each agent owns a complete feature from start to finish
+- Claude Code works on Feature A
+- Gemini works on Feature B
+- Both follow the same documentation standards
+- Both create separate branches
+- Both merge independently to main
+
+### Common Standards (Both Agents)
+
+Both Claude Code and Gemini must:
+1. **Use the same terminology** - Consistent naming across the codebase
 2. **Follow the same patterns** - Same file structure, code style
-3. **Document extensively** - Both agents should comment thoroughly
-4. **Reference AGENTS.md** - Always check this file first
-5. **Update AGENTS.md** - Document new patterns as they emerge
-6. **Use MCP servers consistently** - Same tools for same tasks
+3. **Document extensively** - Comprehensive comments (coding-standards.md)
+4. **Reference AGENTS.md** - Always check project-specific instructions
+5. **Follow git-workflow.md** - Same branching and PR process
+6. **Run security audits** - OWASP Top 10 for every feature
+7. **Update AGENTS.md** - Document new patterns as they emerge
 
-**Note:** Claude Code has additional capabilities (plugins, skills, MCP servers) that Gemini 3 Pro doesn't have. See [claude.md](claude.md) for details and handoff protocols.
+### Agent-Specific Capabilities
 
-### Handoff Template
+**Claude Code has:**
+- Plugins (Superpowers, Frontend Design, etc.)
+- Custom skills and slash commands
+- MCP servers
+- See [claude.md](claude.md) for details
 
-When switching between agents, leave this comment:
+**Gemini has:**
+- Manual testing and validation workflows
+- Direct documentation reference
+- See [gemini.md](gemini.md) for details
 
-```typescript
-/**
- * AGENT HANDOFF CHECKPOINT
- *
- * Last worked on by: [Claude Code / Gemini 3 Pro]
- * Date: [Date]
- *
- * Completed:
- * - [List what was just finished]
- *
- * In Progress:
- * - [What's currently being worked on]
- *
- * Next Steps:
- * - [ ] [Step 1]
- * - [ ] [Step 2]
- *
- * Open Questions:
- * - [Any decisions that need to be made]
- *
- * Context:
- * - [Any important context the next agent should know]
- */
-```
+### File Access Rules
+
+**CRITICAL:**
+- Claude Code agents: Read [claude.md](claude.md), do NOT read gemini.md
+- Gemini agents: Read [gemini.md](gemini.md), do NOT read claude.md
+- Both agents: Read all other documentation files (coding-standards.md, etc.)
 
 ## Error Handling Requirements
 

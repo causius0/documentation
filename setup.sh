@@ -183,14 +183,24 @@ See [claude.md]($DOCS_REPO/blob/main/claude.md) for detailed plugin documentatio
 
 ## Recommended Workflow
 
-1. **/brainstorming** - Understand requirements
-2. **/writing-plans** - Create implementation plan
-3. Develop with extensive comments (see coding-standards.md)
-4. Test manually
-5. Run security audit (see security-testing.md)
-6. **/verification-before-completion** - Verify everything
-7. **/requesting-code-review** - Self-review
-8. **/finishing-a-development-branch** - Merge to main
+1. **/permissions** - Grant safe operation permissions (start of session)
+2. **/brainstorming** - Understand requirements
+3. Use **code-architect** agent - Design feature architecture
+4. **/writing-plans** - Create implementation plan
+5. Develop with extensive comments (see coding-standards.md)
+6. Test manually
+7. Run security audit (see security-testing.md)
+8. Use **build-validator** agent - Validate build before commit
+9. Use **code-simplifier** agent - Simplify if over-engineered
+10. **/verification-before-completion** - Verify everything
+11. **/requesting-code-review** - Self-review
+12. **/finishing-a-development-branch** - Merge to main
+
+## Essential Agents
+
+- **build-validator**: Validates builds and catches errors before deployment
+- **code-architect**: Designs feature architecture before implementation
+- **code-simplifier**: Refactors code to be simpler and more maintainable
 
 ## Testing Checklist
 
@@ -360,10 +370,73 @@ Import or update documentation standards from the main repository.
 bash <(curl -fsSL https://raw.githubusercontent.com/causius0/documentation/main/setup.sh)
 EOF
 
+    # Permissions command
+    cat > .claude/commands/permissions.md << 'EOF'
+# Permissions Configuration
+
+Grant Claude Code permission to perform safe operations without asking for approval each time.
+
+## Auto-Approved Operations
+
+The following operations are pre-authorized and will not require manual approval:
+
+### File Operations
+- Read any file in the project
+- Write/edit files in src/, components/, pages/, api/, lib/, utils/, styles/
+- Create new files in project directories
+- Delete files ONLY when explicitly requested
+
+### Git Operations
+- git status, diff, log, branch (listing/creation)
+- git add (all files)
+- git commit with proper messages
+- git push to feature/* branches (NOT main/master)
+
+### Build & Test
+- Package installation (npm/pnpm install)
+- Development server (npm run dev, pnpm run dev)
+- Build (npm run build, pnpm run build)
+- Linting (npm run lint, pnpm run lint)
+- Type checking (npm run typecheck, pnpm run typecheck)
+- Testing (npm test, pnpm test)
+
+### Safe Commands
+- File viewing (cat, less, head, tail, grep)
+- File finding (ls, find, fd)
+- Directory operations (cd, pwd, mkdir in project)
+- Node/Python execution (project scripts only)
+
+## NEVER Auto-Approved
+
+These operations ALWAYS require explicit permission:
+
+❌ git push to main/master
+❌ git push --force (any branch)
+❌ Destructive git operations (reset --hard, rebase -i)
+❌ npm publish or deployment commands
+❌ Database operations on production
+❌ Deleting directories (rm -rf)
+❌ Operations outside project directory
+❌ System configuration changes
+❌ Installing global packages
+
+## Usage
+
+Invoke this command at the start of each session:
+```
+/permissions
+```
+
+Claude Code will acknowledge these permissions and follow them for the session.
+
+**Security:** Safe operations are pre-approved. Dangerous operations always require confirmation.
+EOF
+
     print_success "Created /security-audit command"
     print_success "Created /pre-merge command"
     print_success "Created /document-feature command"
     print_success "Created /import-docs command"
+    print_success "Created /permissions command"
 }
 
 create_claude_config() {
@@ -595,14 +668,23 @@ print_next_steps() {
     echo "   • .env.example - Environment variables template"
     echo ""
     echo "3. Available slash commands:"
+    echo "   • /permissions - Auto-approve safe operations (use at session start)"
     echo "   • /security-audit - Run OWASP Top 10 security tests"
     echo "   • /pre-merge - Complete pre-merge checklist"
     echo "   • /document-feature - Add comprehensive docs"
     echo "   • /import-docs - Update documentation standards"
     echo ""
-    echo "4. Start developing:"
+    echo "4. Essential agents to use:"
+    echo "   • build-validator - Validate builds before commit"
+    echo "   • code-architect - Design architecture before implementing"
+    echo "   • code-simplifier - Simplify over-engineered code"
+    echo ""
+    echo "5. Start developing:"
+    echo "   • Run /permissions at start of each session"
     echo "   • Use /brainstorming before new features"
+    echo "   • Use code-architect agent for complex features"
     echo "   • Follow coding-standards.md (extensive comments)"
+    echo "   • Use build-validator agent before commits"
     echo "   • Run /pre-merge before creating PRs"
     echo "   • Use /verification-before-completion before merging"
     echo ""

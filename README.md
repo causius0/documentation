@@ -17,6 +17,7 @@ documentation/
 ├── QUICKSTART.md                  # ⚡ Automated setup (ONE-LINE INSTALL)
 ├── agents.md                      # AI agent instructions and MCP servers
 ├── claude.md                      # Claude Code plugins, skills, workflows
+├── gemini.md                      # Gemini AI agent workflows (separate features)
 ├── coding-standards.md            # Code style, comments, philosophy
 ├── tech-stack.md                  # Technology choices and rationale
 ├── git-workflow.md                # Branching, commits, PRs
@@ -67,12 +68,31 @@ Contains:
 Contains:
 - Essential plugins (Superpowers, Frontend Design, Episodic Memory, Feature Dev)
 - When and how to use each plugin
-- Custom skills and slash commands
+- Custom skills and slash commands (/permissions for auto-approvals)
 - Enhanced workflows with plugins
-- Integration with Gemini 3 Pro (handoff protocols)
+- Essential project agents (build-validator, code-architect, code-simplifier)
+- Permission management system
 - Plugin installation and troubleshooting
 
-**When to read:** When using Claude Code (recommended primary agent)
+**When to read:** When using Claude Code
+
+**Important:** Claude Code agents should NOT read gemini.md
+
+### 2b. gemini.md
+**Gemini AI agent-specific workflows.**
+
+Contains:
+- Manual testing and validation workflows
+- Security testing procedures (OWASP Top 10)
+- Build validation steps
+- Code architecture approaches
+- Complete workflow without Claude Code features
+
+**When to read:** When using Gemini AI agents
+
+**Important:** Gemini agents should NOT read claude.md
+
+**Note:** Claude Code and Gemini work on **separate features** independently - no handoffs
 
 ### 3. coding-standards.md
 **How to write code that's easy to learn from.**
