@@ -388,6 +388,7 @@ The following operations are pre-authorized and will not require manual approval
 
 ### Git Operations
 - git status, diff, log, branch (listing/creation)
+- git fetch (check remote changes)
 - git add (all files)
 - git commit with proper messages
 - git push to feature/* branches (NOT main/master)

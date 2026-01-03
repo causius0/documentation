@@ -553,6 +553,7 @@ Automatically authorize safe operations to reduce interruptions during developme
 ✅ ls, cat, grep, find
 ✅ mkdir, touch (in project directory)
 ✅ node, python (running project scripts)
+✅ git fetch (checking remote changes)
 
 // What is NEVER auto-authorized
 ❌ git push --force
@@ -587,6 +588,7 @@ The following operations are pre-authorized and will not require manual approval
 
 ### Git Operations
 - git status, diff, log, branch
+- git fetch (check remote changes)
 - git add (all files)
 - git commit with proper messages
 - git push to feature/* branches
