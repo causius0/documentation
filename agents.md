@@ -10,6 +10,8 @@ Provide AI agents with:
 - PR/commit conventions
 - Project-specific gotchas and tips
 
+**For Claude Code users:** See [claude.md](claude.md) for Claude Code-specific plugins, skills, and enhanced workflows.
+
 ## Sample AGENTS.md Template
 
 Below is an example for a pnpm monorepo with Turbo:
@@ -178,6 +180,8 @@ Both agents must:
 4. **Reference AGENTS.md** - Always check this file first
 5. **Update AGENTS.md** - Document new patterns as they emerge
 6. **Use MCP servers consistently** - Same tools for same tasks
+
+**Note:** Claude Code has additional capabilities (plugins, skills, MCP servers) that Gemini 3 Pro doesn't have. See [claude.md](claude.md) for details and handoff protocols.
 
 ### Handoff Template
 

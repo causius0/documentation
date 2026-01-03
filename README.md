@@ -15,6 +15,7 @@ This repository contains standardized documentation templates and guidelines tha
 documentation/
 ├── README.md                      # This file - overview and quick start
 ├── agents.md                      # AI agent instructions and MCP servers
+├── claude.md                      # Claude Code plugins, skills, workflows
 ├── coding-standards.md            # Code style, comments, philosophy
 ├── tech-stack.md                  # Technology choices and rationale
 ├── git-workflow.md                # Branching, commits, PRs
@@ -39,7 +40,20 @@ Contains:
 
 **When to read:** Beginning of every work session
 
-### 2. coding-standards.md
+### 2. claude.md
+**Claude Code-specific features and plugins.**
+
+Contains:
+- Essential plugins (Superpowers, Frontend Design, Episodic Memory, Feature Dev)
+- When and how to use each plugin
+- Custom skills and slash commands
+- Enhanced workflows with plugins
+- Integration with Gemini 3 Pro (handoff protocols)
+- Plugin installation and troubleshooting
+
+**When to read:** When using Claude Code (recommended primary agent)
+
+### 3. coding-standards.md
 **How to write code that's easy to learn from.**
 
 Contains:
@@ -51,7 +65,7 @@ Contains:
 
 **When to read:** Before writing any code
 
-### 3. tech-stack.md
+### 4. tech-stack.md
 **What technologies to use and why.**
 
 Contains:
@@ -63,7 +77,7 @@ Contains:
 
 **When to read:** Starting new project or adding new features
 
-### 4. git-workflow.md
+### 5. git-workflow.md
 **Branch, test, merge workflow.**
 
 Contains:
@@ -75,7 +89,7 @@ Contains:
 
 **When to read:** Before creating branches or making commits
 
-### 5. security-testing.md
+### 6. security-testing.md
 **The hacker agent protocol.**
 
 Contains:
@@ -87,7 +101,7 @@ Contains:
 
 **When to read:** Before merging any feature
 
-### 6. documentation-standards.md
+### 7. documentation-standards.md
 **How to document code and projects.**
 
 Contains:
@@ -99,7 +113,7 @@ Contains:
 
 **When to read:** When creating documentation
 
-### 7. dependencies-guide.md
+### 8. dependencies-guide.md
 **When to add dependencies and which ones.**
 
 Contains:
@@ -209,6 +223,7 @@ This is a **living repository**. Update it whenever you:
 | Task | File to Check |
 |------|---------------|
 | Starting work | agents.md |
+| Using Claude Code | claude.md |
 | Writing code | coding-standards.md |
 | Choosing tech | tech-stack.md |
 | Creating branch | git-workflow.md |
