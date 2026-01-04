@@ -29,6 +29,83 @@ bash <(curl -fsSL https://raw.githubusercontent.com/causius0/documentation/main/
 
 ---
 
+## 📖 CRITICAL: Always Read README.md First
+
+**When starting work on ANY repository:**
+
+1. **Immediately read the README.md file**
+   ```bash
+   # First thing to do in any repo
+   Read the README.md file
+   ```
+
+2. **The README contains:**
+   - What the project does
+   - How to run it
+   - Project-specific setup instructions
+   - Architecture overview
+   - Important context you need
+
+3. **Then read AGENTS.md if it exists**
+   - Project-specific commands
+   - Custom workflows
+   - Special instructions
+
+**DO NOT start coding without reading README.md first.**
+
+---
+
+## ⚠️ Token Limit Management
+
+**Monitor your token usage throughout the session.**
+
+**When you reach 80% of token limit (~160,000 tokens):**
+
+1. **Stop what you're doing**
+2. **Tell the user:**
+   ```
+   ⚠️ TOKEN LIMIT WARNING
+
+   I'm at 80% of my token limit (160k/200k tokens used).
+
+   We should plan a handoff soon to avoid losing context mid-task.
+
+   Current status:
+   - [What you've completed]
+   - [What's in progress]
+   - [What's remaining]
+
+   Options:
+   1. Finish current task and hand off (~X tokens needed)
+   2. Hand off now and continue in new session
+   3. Summarize and create handoff notes
+
+   What would you like to do?
+   ```
+
+3. **Wait for user decision**
+
+**At 90% token limit (~180,000 tokens):**
+
+1. **Immediately stop and alert:**
+   ```
+   🚨 URGENT: Token limit at 90% (180k/200k)
+
+   We need to hand off NOW to preserve context.
+
+   I'm creating handoff notes...
+   ```
+
+2. **Create handoff document:**
+   - Save current state
+   - Document what's done
+   - Document what's next
+   - List any blockers or decisions needed
+
+**Never let tokens run out mid-task without warning the user.**
+
+---
+
 ## Why Claude Code?
 
 Claude Code is optimized for this workflow because:

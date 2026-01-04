@@ -26,6 +26,44 @@ bash <(curl -fsSL https://raw.githubusercontent.com/causius0/documentation/main/
 
 ---
 
+## 📖 CRITICAL: Always Read README.md First
+
+**When starting work on ANY repository:**
+
+1. **Immediately read README.md**
+   - Understand what the project does
+   - Learn how to run it
+   - Get important context
+
+2. **Then read AGENTS.md** (if it exists)
+   - Project-specific commands
+   - Custom workflows
+
+**DO NOT start coding without reading README.md first.**
+
+---
+
+## ⚠️ Session Management
+
+**Monitor your context/token usage if applicable.**
+
+**When approaching limits:**
+- Warn the user immediately
+- Provide status update of completed work
+- Document current progress
+- Create handoff notes for next session
+
+**Create handoff document with:**
+- What's completed
+- What's in progress
+- What's remaining
+- Any blockers or decisions needed
+- Links to relevant files
+
+**Never lose context mid-task - warn early and hand off cleanly.**
+
+---
+
 ## Gemini Agent Role
 
 Gemini agents work on **separate features** independently. There is no handoff between Claude Code and Gemini - each agent owns complete features from start to finish.

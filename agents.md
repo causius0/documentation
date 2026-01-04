@@ -27,6 +27,41 @@ bash <(curl -fsSL https://raw.githubusercontent.com/causius0/documentation/main/
 
 ---
 
+## 📖 CRITICAL: Always Read README.md First
+
+**When starting work on ANY repository:**
+
+1. **Immediately read README.md**
+   - Understand what the project does
+   - Learn how to run it
+   - Get important context
+
+2. **Then read AGENTS.md** (if it exists)
+   - Project-specific commands
+   - Custom workflows
+
+**DO NOT start coding without reading README.md first.**
+
+---
+
+## ⚠️ Token Limit Management (Claude Code)
+
+**When you reach 80% of token limit (~160,000 tokens):**
+- Stop and warn the user
+- Provide status update
+- Offer handoff options
+
+**At 90% token limit (~180,000 tokens):**
+- Immediately alert user
+- Create handoff notes
+- Prepare for session end
+
+**Never let tokens run out mid-task without warning.**
+
+See [claude.md](claude.md) for detailed token management protocol.
+
+---
+
 ## Purpose
 
 Provide AI agents with:

@@ -31,6 +31,38 @@ This is the user's signal that they want the full documentation setup applied to
 
 ---
 
+## 📖 FOR AI AGENTS: Critical Reading Requirements
+
+**ALWAYS do this when starting work on ANY repository:**
+
+1. **Read README.md FIRST**
+   - Every repository has important context in README
+   - Understand what the project does
+   - Learn how to run it
+   - Get architecture overview
+
+2. **Then read AGENTS.md** (if exists)
+   - Project-specific commands
+   - Custom workflows
+   - Special instructions
+
+**DO NOT start coding without reading README.md first.**
+
+---
+
+## ⚠️ FOR AI AGENTS: Token Limit Warnings
+
+**Monitor token usage and warn the user BEFORE running out:**
+
+- **At 80% tokens (~160k/200k):** Warn user, offer handoff options
+- **At 90% tokens (~180k/200k):** URGENT warning, create handoff notes immediately
+
+**Never run out of tokens mid-task.** Always plan handoffs proactively.
+
+See [claude.md](claude.md) for detailed token management protocol.
+
+---
+
 ## Purpose
 
 - Provide AI agents with immediate context about project structure and conventions
