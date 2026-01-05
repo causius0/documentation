@@ -63,6 +63,41 @@ See [claude.md](claude.md) for detailed token management protocol.
 
 ---
 
+## 🌿 FOR AI AGENTS: Always Create Feature Branches
+
+**CRITICAL: NEVER work directly on main branch.**
+
+**For EVERY feature or task:**
+1. Create branch FIRST: `git checkout -b feature/descriptive-name`
+2. Do all work on the branch
+3. Test thoroughly
+4. Only merge to main when complete and tested
+
+**Branch naming convention:**
+- `feature/` - New features
+- `fix/` - Bug fixes
+- `refactor/` - Code refactoring
+- `docs/` - Documentation
+- `security/` - Security fixes
+
+See [git-workflow.md](git-workflow.md) for detailed branching workflow.
+
+---
+
+## 🧪 FOR AI AGENTS: Always Test with Sample Material
+
+**When given sample data, test files, or example inputs:**
+
+1. **Use EXACT sample material provided** - don't modify it
+2. **Test with it as-is first** - verify it works
+3. **Test edge cases** - empty, large, invalid inputs
+4. **Document test results** - what passed, what failed
+5. **If fails** - fix, re-test with same sample, verify
+
+**Never skip testing with provided samples. It's critical validation.**
+
+---
+
 ## Purpose
 
 - Provide AI agents with immediate context about project structure and conventions

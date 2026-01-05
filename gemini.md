@@ -64,6 +64,60 @@ bash <(curl -fsSL https://raw.githubusercontent.com/causius0/documentation/main/
 
 ---
 
+## 🌿 CRITICAL: Always Create Feature Branches
+
+**NEVER work directly on main.**
+
+**For EVERY feature:**
+1. Create branch first: `git checkout -b feature/descriptive-name`
+2. Do all work on the branch
+3. Test thoroughly with sample material
+4. Run security audit
+5. Merge to main only when complete
+
+**Branch naming:**
+- `feature/` - New features
+- `fix/` - Bug fixes
+- `refactor/` - Code refactoring
+- `docs/` - Documentation
+- `security/` - Security fixes
+- `perf/` - Performance improvements
+
+---
+
+## 🧪 CRITICAL: Always Test with Sample Material
+
+**When given sample data, test files, or example inputs:**
+
+1. **Use EXACT sample material provided**
+   - Don't modify it
+   - Test with it as-is first
+
+2. **Test edge cases**
+   - Empty inputs
+   - Large inputs
+   - Special characters
+   - Invalid data
+
+3. **Document test results**
+   ```markdown
+   Test 1: [Description]
+   - Input: [sample used]
+   - Expected: [expected result]
+   - Actual: [actual result]
+   - Status: ✅ PASS / ❌ FAIL
+   ```
+
+4. **If sample fails**
+   - Document the failure
+   - Fix the issue
+   - Re-test with same sample
+   - Verify fix works
+
+**Never skip testing with provided samples.**
+
+---
+
 ## Gemini Agent Role
 
 Gemini agents work on **separate features** independently. There is no handoff between Claude Code and Gemini - each agent owns complete features from start to finish.

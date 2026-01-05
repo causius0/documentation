@@ -106,6 +106,94 @@ bash <(curl -fsSL https://raw.githubusercontent.com/causius0/documentation/main/
 
 ---
 
+## 🌿 CRITICAL: Always Create Feature Branches
+
+**NEVER work directly on main branch.**
+
+**For EVERY feature or task:**
+
+1. **Create a descriptive branch FIRST:**
+   ```bash
+   git checkout -b feature/descriptive-name
+
+   # Examples:
+   git checkout -b feature/user-authentication
+   git checkout -b feature/payment-integration
+   git checkout -b fix/database-timeout
+   git checkout -b refactor/simplify-auth-logic
+   git checkout -b docs/update-readme
+   ```
+
+2. **Branch naming convention:**
+   ```
+   feature/    - New features
+   fix/        - Bug fixes
+   refactor/   - Code refactoring
+   docs/       - Documentation updates
+   test/       - Test additions/updates
+   security/   - Security fixes
+   perf/       - Performance improvements
+   ```
+
+3. **Do all work on the branch:**
+   - Write code
+   - Test thoroughly
+   - Run security audit
+   - Update documentation
+
+4. **Only merge to main when complete:**
+   - All tests pass
+   - Security audit complete
+   - Documentation updated
+   - Code reviewed (use /requesting-code-review)
+
+**DO NOT commit directly to main. Always branch first.**
+
+---
+
+## 🧪 CRITICAL: Always Test with Sample Material
+
+**When given sample data, test files, or example inputs:**
+
+1. **Use the EXACT sample material provided:**
+   - Don't modify it
+   - Test with it as-is first
+   - Verify it works correctly
+
+2. **Test with edge cases:**
+   - Empty inputs
+   - Large inputs
+   - Special characters
+   - Invalid data
+   - Boundary conditions
+
+3. **Document test results:**
+   ```markdown
+   ## Testing with Sample Material
+
+   Sample provided: [describe the sample]
+
+   Test 1: [Description]
+   - Input: [what was tested]
+   - Expected: [expected result]
+   - Actual: [actual result]
+   - Status: ✅ PASS / ❌ FAIL
+
+   Test 2: [Description]
+   ...
+   ```
+
+4. **If sample material fails:**
+   - Document the failure
+   - Explain what went wrong
+   - Fix the issue
+   - Re-test with same sample
+   - Verify fix works
+
+**Never skip testing with provided samples. It's critical validation.**
+
+---
+
 ## Why Claude Code?
 
 Claude Code is optimized for this workflow because:

@@ -62,6 +62,38 @@ See [claude.md](claude.md) for detailed token management protocol.
 
 ---
 
+## 🌿 CRITICAL: Always Create Feature Branches
+
+**NEVER work directly on main.**
+
+**For EVERY feature:**
+1. Create branch first: `git checkout -b feature/descriptive-name`
+2. Do all work on the branch
+3. Test thoroughly
+4. Merge to main only when complete
+
+**Branch naming:**
+- `feature/` - New features
+- `fix/` - Bug fixes
+- `refactor/` - Code refactoring
+- `docs/` - Documentation
+- `security/` - Security fixes
+
+---
+
+## 🧪 CRITICAL: Always Test with Sample Material
+
+**When given sample data:**
+1. Use EXACT sample material provided
+2. Test with it as-is first
+3. Test edge cases (empty, large, invalid)
+4. Document test results
+5. If fails, fix and re-test
+
+**Never skip testing with provided samples.**
+
+---
+
 ## Purpose
 
 Provide AI agents with:
