@@ -228,6 +228,206 @@ gh pr create
 
 **Default: Squash merge** unless there's a reason to preserve commit history.
 
+## Production Deployment Considerations
+
+### ⚠️ CRITICAL: Main Branch = Production
+
+**When pushing to main, the code will be deployed to production.** You must update the code to consider this BEFORE merging:
+
+#### Pre-Merge Production Checklist
+
+```markdown
+## Environment & Configuration
+- [ ] Review all environment variables for production values
+- [ ] Remove any development/debug flags
+- [ ] Verify DATABASE_URL points to production database
+- [ ] Check API endpoints use production URLs
+- [ ] Ensure CORS settings allow production domain
+- [ ] Verify authentication keys/secrets are production-ready
+
+## Code Changes Required
+- [ ] Remove/disable debug logging
+- [ ] Remove test routes/endpoints
+- [ ] Set NODE_ENV=production (or equivalent)
+- [ ] Verify error messages don't leak sensitive info
+- [ ] Check rate limiting is enabled and appropriate
+- [ ] Ensure proper error handling for production
+
+## Database & Data
+- [ ] Database migrations reviewed and tested
+- [ ] Backup strategy confirmed before schema changes
+- [ ] Seed data removed (only for development)
+- [ ] Connection pooling configured for production load
+- [ ] Index requirements reviewed for performance
+
+## Performance & Scalability
+- [ ] Asset bundling/optimization enabled
+- [ ] Caching strategy configured (Redis/CDN)
+- [ ] Static asset compression enabled
+- [ ] Database queries optimized
+- [ ] API rate limiting configured
+- [ ] Memory limits reviewed
+
+## Monitoring & Observability
+- [ ] Error tracking configured (Sentry, etc.)
+- [ ] Logging set to appropriate level (warn/error in prod)
+- [ ] Performance monitoring enabled
+- [ ] Uptime monitoring configured
+- [ ] Health check endpoints functional
+
+## Security Hardening
+- [ ] HTTPS enforced everywhere
+- [ ] Security headers configured (CSP, HSTS, etc.)
+- [ ] Dependencies updated and audited (npm audit)
+- [ ] Secrets not in code (use environment variables)
+- [ ] Authentication/authorization fully configured
+- [ ] Input validation on all endpoints
+
+## Rollback Preparedness
+- [ ] Previous version tagged/accessible
+- [ ] Database rollback plan documented
+- [ ] Feature flags ready if needed
+- [ ] Deployment window considered (avoid peak traffic if risky)
+```
+
+#### Common Production Mistakes to Avoid
+
+1. **Leaving debug code in production**
+   ```javascript
+   // ❌ BAD - Don't merge to main
+   console.log("User data:", sensitiveUserData);
+   console.debug("API response: ", response);
+
+   // ✅ GOOD - Use proper logging
+   logger.info("User action completed", { userId: user.id });
+   ```
+
+2. **Development endpoints exposed**
+   ```javascript
+   // ❌ BAD - Remove before merging to main
+   app.get('/debug/all-users', async (req, res) => {
+     const users = await db.query('SELECT * FROM users');
+     res.json(users);
+   });
+
+   // ✅ GOOD - Admin only, authenticated, with proper authorization
+   app.get('/admin/users',
+     authenticate,
+     authorize('admin'),
+     async (req, res) => {
+       const users = await userService.getAllUsers();
+       res.json(users);
+     }
+   );
+   ```
+
+3. **Wrong environment variables**
+   ```javascript
+   // ❌ BAD - Hardcoded or wrong environment
+   const API_URL = 'http://localhost:3000/api';
+   const DB_HOST = '127.0.0.1';
+
+   // ✅ GOOD - Environment-specific
+   const API_URL = process.env.API_URL;
+   const DB_HOST = process.env.DATABASE_URL;
+   ```
+
+4. **No error handling in production**
+   ```javascript
+   // ❌ BAD - Crashes in production
+   app.get('/api/data', async (req, res) => {
+     const data = await fetchData();
+     res.json(data);
+   });
+
+   // ✅ GOOD - Graceful error handling
+   app.get('/api/data', async (req, res) => {
+     try {
+       const data = await fetchData();
+       res.json(data);
+     } catch (error) {
+       logger.error('Failed to fetch data', { error: error.message });
+       res.status(500).json({ error: 'Internal server error' });
+     }
+   });
+   ```
+
+#### Production Deployment Flow
+
+```
+┌─────────────────────────────────────────────────────────┐
+│ BEFORE MERGING TO MAIN                                  │
+└─────────────────────────────────────────────────────────┘
+                         ↓
+        Review all items in the Pre-Merge Production Checklist
+                         ↓
+┌─────────────────────────────────────────────────────────┐
+│ UPDATE CODE FOR PRODUCTION                              │
+│ • Remove debug code                                     │
+│ • Update environment variables                          │
+│ • Configure production logging                          │
+│ • Enable security features                              │
+│ • Test in staging/preview environment                   │
+└─────────────────────────────────────────────────────────┘
+                         ↓
+┌─────────────────────────────────────────────────────────┐
+│ MERGE TO MAIN (triggers production deployment)          │
+└─────────────────────────────────────────────────────────┘
+                         ↓
+┌─────────────────────────────────────────────────────────┐
+│ POST-DEPLOYMENT VERIFICATION                            │
+│ • Check application health endpoint                     │
+│ • Monitor error logs for 15 minutes                     │
+│ • Verify critical functionality                         │
+│ • Be ready to rollback if issues detected               │
+└─────────────────────────────────────────────────────────┘
+```
+
+#### Environment Variable Template
+
+Maintain a `.env.production.example` file to document required production variables:
+
+```bash
+# Application
+NODE_ENV=production
+PORT=3000
+API_URL=https://your-domain.com
+
+# Database
+DATABASE_URL=postgresql://user:pass@host:5432/dbname
+DB_POOL_MIN=2
+DB_POOL_MAX=10
+
+# Security
+JWT_SECRET=your-super-secret-key
+JWT_EXPIRATION=1h
+SESSION_SECRET=another-secret-key
+
+# External Services
+REDIS_URL=redis://user:pass@host:6379
+SENDGRID_API_KEY=your-api-key
+
+# Monitoring
+SENTRY_DSN=https://your-sentry-dsn
+LOG_LEVEL=warn  # debug, info, warn, error
+
+# Features
+FEATURE_NEW_UI=false
+FEATURE_BETA_FUNCTIONALITY=false
+```
+
+#### Automatic Deployment Considerations
+
+If your repository has CI/CD configured (GitHub Actions, Render, etc.):
+
+- **Merging to main triggers automatic production deployment**
+- No manual approval step in most cases
+- You must be 100% certain code is production-ready before merging
+- Test in preview/staging environments first
+- Use feature flags for incomplete functionality
+
+**Remember: Once you merge to main, the code goes live immediately. There's no "undo" button that prevents user impact.**
+
 ## Branch Protection Rules (for GitHub)
 
 Recommended settings for `main` branch:
